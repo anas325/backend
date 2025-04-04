@@ -1,0 +1,28 @@
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Django specific files
+db.sqlite3
+*.log
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+*.egg-info/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Static and media files
+/staticfiles/
+/media/
+
+# Migrations
+*/migrations/*.py
+!*/migrations/__init__.py
