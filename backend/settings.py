@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'backend.apps.events', 
     'backend.apps.users',
     'rest_framework',
+    'backend.apps.base',
 ]
+
+LOGIN_REDIRECT_URL = '/'  # Where to redirect after login
+LOGOUT_REDIRECT_URL = '/login/'  # Optional
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
