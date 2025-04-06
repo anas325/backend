@@ -1,7 +1,9 @@
-from .views import EventListCreate
+from .views import EventViewSet
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 
-urlpatterns = [
-    path('', EventListCreate.as_view(), name='event-list-create'),
-]
+router = DefaultRouter()
+router.register(r'movies', EventViewSet)
+
+urlpatterns = router.urls
