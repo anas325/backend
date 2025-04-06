@@ -9,7 +9,8 @@ db.sqlite3
 
 # Environment variables
 .env
-
+/backend/settings.py
+*.env
 # Virtual environment
 .venv/
 env/
