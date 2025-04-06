@@ -26,3 +26,6 @@ env/
 # Migrations
 */migrations/*.py
 !*/migrations/__init__.py
+
+# Include all migrations folders
+**/migrations/
