@@ -24,6 +24,8 @@ env/
 /staticfiles/
 /media/
 
+/static/images
+
 # Migrations
 */migrations/*.py
 !*/migrations/__init__.py
