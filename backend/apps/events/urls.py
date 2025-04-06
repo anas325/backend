@@ -4,6 +4,6 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register(r'movies', EventViewSet)
+router.register(r'', EventViewSet)
 
 urlpatterns = router.urls
