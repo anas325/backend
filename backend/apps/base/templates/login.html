@@ -1,28 +1,198 @@
 <!-- templates/login.html -->
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dynamic</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+        }
+        
+        .dark-mode {
+            --primary-color: #0dcaf0;
+            --secondary-color: #adb5bd;
+            --background-color: #212529;
+            --card-bg: #2c3034;
+            --text-color: #f8f9fa;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle {
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+    </style>
 </head>
-<body class="bg-light d-flex justify-content-center align-items-center bg-dark" style="height: 100vh;">
-    <div class="card p-4 shadow" style="width: 400px;">
-        <h2 class="text-center mb-3">Login</h2>
+<body class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="language-selector">
+        <select class="form-select form-select-sm" id="languageSelect">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+    
+    <div class="theme-toggle">
+        <button class="btn btn-sm btn-outline-secondary" id="themeToggle">
+            <i class="bi bi-moon-fill"></i> Dark Mode
+        </button>
+    </div>
+    
+    <div class="login-card card p-4 shadow">
+        <h2 class="text-center mb-3" data-i18n="login.title">Login</h2>
         <form method="post">
-            {% csrf_token %}
             <div class="mb-3">
-                <label class="form-label">Username</label>
+                <label class="form-label" data-i18n="login.username">Username</label>
                 <input type="text" name="username" class="form-control" required autofocus>
             </div>
             <div class="mb-3">
-                <label class="form-label">Password</label>
+                <label class="form-label" data-i18n="login.password">Password</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
-            {% if form.errors %}
-                <div class="alert alert-danger">Invalid login credentials</div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            
+            <!-- Option dynamique : Se souvenir de moi -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe" data-i18n="login.remember">Remember me</label>
+            </div>
+                <div class="alert alert-danger" data-i18n="login.error">Invalid login credentials</div>
+            
+            <button type="submit" class="btn w-100 mb-2" style="background-color: var(--primary-color); color: white;" data-i18n="login.button">Login</button>
+            
+            <!-- Option dynamique : Lien mot de passe oublié -->
+            <div class="text-center mt-2">
+                <a href="#" class="text-decoration-none" style="color: var(--primary-color);" data-i18n="login.forgot">Forgot password?</a>
+            </div>
+            
+            <!-- Option dynamique : Réseaux sociaux -->
+            <div class="mt-3 text-center">
+                <p class="text-muted" data-i18n="login.social">Or login with</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-google"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-facebook"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-twitter"></i>
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <script>
+        // Gestion du thème dark/light
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> Light Mode';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> Light Mode';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> Dark Mode';
+            }
+        });
+        
+        // Internationalisation (i18n) - version simplifiée
+        const translations = {
+            en: {
+                "login.title": "Login",
+                "login.username": "Username",
+                "login.password": "Password",
+                "login.remember": "Remember me",
+                "login.button": "Login",
+                "login.forgot": "Forgot password?",
+                "login.social": "Or login with",
+                "login.error": "Invalid login credentials"
+            },
+            fr: {
+                "login.title": "Connexion",
+                "login.username": "Nom d'utilisateur",
+                "login.password": "Mot de passe",
+                "login.remember": "Se souvenir de moi",
+                "login.button": "Se connecter",
+                "login.forgot": "Mot de passe oublié ?",
+                "login.social": "Ou se connecter avec",
+                "login.error": "Identifiants invalides"
+            },
+            es: {
+                "login.title": "Iniciar sesión",
+                "login.username": "Nombre de usuario",
+                "login.password": "Contraseña",
+                "login.remember": "Recordarme",
+                "login.button": "Iniciar sesión",
+                "login.forgot": "¿Olvidaste tu contraseña?",
+                "login.social": "O inicia sesión con",
+                "login.error": "Credenciales inválidas"
+            }
+        };
+        
+        const languageSelect = document.getElementById('languageSelect');
+        languageSelect.value = localStorage.getItem('language') || 'en';
+        updateTexts(languageSelect.value);
+        
+        languageSelect.addEventListener('change', (e) => {
+            localStorage.setItem('language', e.target.value);
+            updateTexts(e.target.value);
+        });
+        
+        function updateTexts(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = translations[lang][key] || translations['en'][key];
+            });
+        }
+        
+        // Animation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.login-card').style.opacity = '0';
+            document.querySelector('.login-card').style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                document.querySelector('.login-card').style.transition = 'all 0.3s ease';
+                document.querySelector('.login-card').style.opacity = '1';
+                document.querySelector('.login-card').style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
