@@ -47,67 +47,44 @@
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Event</h1>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
-                    <label class="block text-gray-700 mb-2">Event Name</label>
-                    <input type="text" placeholder="Enter event name" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Total Price</label>
-                    <input type="number" placeholder="0.00" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Date</label>
-                    <input type="date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Time</label>
-                    <input type="time" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-gray-700 mb-2">Location</label>
-                    <input type="text" placeholder="Enter location" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-                <div class="mb-3">
-                    <label class="block text-gray-700 mb-2">Event Image</label>
-                    <input type="file" accept="image/*" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                </div>
-            </div>
-
-            <!-- Invited Users Section -->
-            <div class="mt-8">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-users mr-2 text-orange-500"></i>
-                    Invited Users
-                </h2>
-                
-                <div class="flex flex-wrap gap-4 mb-6" id="invitedUsersContainer">
-                    <!-- User cards will be added here dynamically -->
-                </div>
-                
-                <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                    <div class="flex-1 relative">
-                        <input type="text" id="userSearchInput" placeholder="Email or Username" 
-                               class="w-full border p-2 pl-10 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                        <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+            <form method="POST" enctype="multipart/form-data" action="/api/events/">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Event Name</label>
+                        <input type="text" name="name" placeholder="Enter event name" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent" required>
                     </div>
-                    <button id="addUserBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition flex items-center justify-center">
-                        <i class="fas fa-plus mr-2"></i> Add User
+                    <div>
+                        <label class="block text-gray-700 mb-2">Target Amount</label>
+                        <input type="number" name="target_amount" placeholder="0.00" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Date</label>
+                        <input type="date" name="date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Target Date</label>
+                        <input type="date" name="target_date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">Location</label>
+                        <input type="text" name="location" placeholder="Enter location" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">Description</label>
+                        <textarea name="description" placeholder="Enter event description" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-gray-700 mb-2">Event Image</label>
+                        <input type="file" name="cover_image" accept="image/*" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-center">
+                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition">
+                        <i class="fas fa-calendar-plus mr-2"></i> Create Event
                     </button>
                 </div>
-                
-                <div class="flex flex-wrap gap-3 mt-4">
-                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition flex items-center">
-                        <i class="fas fa-link mr-2"></i> Generate Direct Link
-                    </button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded transition flex items-center">
-                        <i class="fas fa-envelope mr-2"></i> Invite via Email
-                    </button>
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition flex items-center">
-                        <i class="fab fa-facebook-messenger mr-2"></i> Share on Messenger
-                    </button>
-                </div>
-            </div>
+            </form>
         </div>
     
         <!-- Budget Section -->
@@ -139,6 +116,7 @@
                     <h3 class="font-medium text-gray-700 mb-2">Remaining</h3>
                     <p class="text-2xl font-bold text-orange-500">$250</p>
                 </div>
+               
             </div>
         </div>
     </main>
@@ -237,7 +215,49 @@
                     setTimeout(() => toast.remove(), 300);
                 }, 3000);
             }
-            
+            // Create Event button click handler
+            const createEventButton = document.querySelector('#ce');
+            createEventButton.addEventListener('click', function() {
+                const eventName = document.querySelector('input[placeholder="Enter event name"]').value.trim();
+                const totalPrice = document.querySelector('input[placeholder="0.00"]').value.trim();
+                const eventDate = document.querySelector('input[type="date"]').value.trim();
+                const eventTime = document.querySelector('input[type="time"]').value.trim();
+                const location = document.querySelector('input[placeholder="Enter location"]').value.trim();
+                const eventImage = document.querySelector('input[type="file"]').files[0];
+
+                if (!eventName || !totalPrice || !eventDate || !eventTime || !location) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('name', eventName);
+                formData.append('total_price', totalPrice);
+                formData.append('date', eventDate);
+                formData.append('time', eventTime);
+                formData.append('location', location);
+                if (eventImage) {
+                    formData.append('image', eventImage);
+                }
+
+                fetch('/api/events/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to create event');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showToast('Event created successfully!', 'success');
+                    console.log('Event created:', data);
+                })
+                .catch(error => {
+                    showToast(error.message, 'error');
+                });
+            });
             // Simulate budget progress animation
             setTimeout(() => {
                 const progressBar = document.querySelector('.progress-bar');

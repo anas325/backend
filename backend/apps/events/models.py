@@ -8,7 +8,7 @@ class Event(models.Model):
     description = models.TextField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
-    organizer = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='organized_events')
+    organizer = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='organized_events', default=4)
     participants = models.ManyToManyField('users.User', related_name='events', blank=True)
     target_amount = models.IntegerField(blank=True, null=True)
     target_date = models.DateField(blank=True, null=True)
@@ -28,7 +28,7 @@ class task(models.Model):
                                                     ('completed', 'Completed')], default='pending')
     def __str__(self):
         return self.title
-    
+
 
 class Expense(models.Model):
     id = models.AutoField(primary_key=True)
