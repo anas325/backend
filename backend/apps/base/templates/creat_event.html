@@ -6,12 +6,23 @@
     <title>WeSplit - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
         }
         .bg-gray-100 {
             background-color: #f7fafc;
+        }
+        .user-card {
+            transition: all 0.3s ease;
+        }
+        .user-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -20,50 +31,215 @@
         <div class="text-2xl font-bold text-black">WeSplit</div>
         <div class="space-x-6">
             <a href="home1.html" class="text-orange-500 font-medium">Home</a>
-            <a href="#" class="text-gray-700">Event Creation</a>
-            <a href="#" class="text-gray-700">Chat & Networking</a>
+            <a href="events.html" class="text-gray-700 hover:text-orange-500 transition">Events</a>
+            <a href="#" class="text-gray-700 hover:text-orange-500 transition">Chat & Networking</a>
         </div>
         <div class="flex space-x-4 items-center">
-            <button class="text-gray-700">🔍</button>
-            <button class="text-gray-700">🔔</button>
-            <img src="https://via.placeholder.com/40" class="rounded-full" alt="User Avatar">
+            <button class="text-gray-700 hover:text-orange-500 transition"><i class="fas fa-search"></i></button>
+            <button class="text-gray-700 hover:text-orange-500 transition relative">
+                <i class="fas fa-bell"></i>
+                <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-orange-500"></span>
+            </button>
+            <img src="https://via.placeholder.com/40" class="rounded-full hover:ring-2 ring-orange-500 transition" alt="User Avatar">
         </div>
     </nav>
-    <main class="flex-1 p-6">
+    <main class="flex-1 p-6 max-w-4xl mx-auto">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Event</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-gray-700 mb-2">Event Name</label>
+                    <input type="text" placeholder="Enter event name" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Total Price</label>
+                    <input type="number" placeholder="0.00" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Date</label>
+                    <input type="date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Time</label>
+                    <input type="time" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 mb-2">Location</label>
+                    <input type="text" placeholder="Enter location" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+            </div>
 
-        <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
-            <input type="text" placeholder="Event Name" class="w-full border p-2 rounded mb-4">
-            <input type="number" placeholder="Total Price" class="w-full border p-2 rounded mb-4">
-            <input type="date" class="w-full border p-2 rounded mb-4">
-            <input type="text" placeholder="Location" class="w-full border p-2 rounded mb-4">
-            <input type="time" class="w-full border p-2 rounded mb-4">
-    
-            <!-- Invited Users -->
-            <h2 class="text-lg font-bold mt-4">Invited Users</h2>
-            <div class="flex items-center space-x-2 mt-2">
-                <button class="bg-orange-500 text-white px-3 py-1 rounded">Direct Link Chat</button>
-                <button class="bg-gray-300 px-3 py-1 rounded">Invite</button>
-            </div>
-            <div class="flex items-center space-x-2 mt-3">
-                <input type="text" placeholder="Email or Username" class="border p-2 rounded flex-1">
-                <button class="bg-orange-500 text-white px-3 py-1 rounded">Add</button>
-            </div>
-    
-            <div class="flex items-center mt-3">
-                <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
-                <span class="ml-2">User Name You</span>
-    
-                <button class="ml-auto text-red-500">Remove</button>
+            <!-- Invited Users Section -->
+            <div class="mt-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-users mr-2 text-orange-500"></i>
+                    Invited Users
+                </h2>
+                
+                <div class="flex flex-wrap gap-4 mb-6" id="invitedUsersContainer">
+                    <!-- User cards will be added here dynamically -->
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                    <div class="flex-1 relative">
+                        <input type="text" id="userSearchInput" placeholder="Email or Username" 
+                               class="w-full border p-2 pl-10 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button id="addUserBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition flex items-center justify-center">
+                        <i class="fas fa-plus mr-2"></i> Add User
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition flex items-center">
+                        <i class="fas fa-link mr-2"></i> Generate Direct Link
+                    </button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded transition flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> Invite via Email
+                    </button>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition flex items-center">
+                        <i class="fab fa-facebook-messenger mr-2"></i> Share on Messenger
+                    </button>
+                </div>
             </div>
         </div>
     
-        <!-- Budget -->
+        <!-- Budget Section -->
         <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-bold">Budget</h2>
-            <div class="w-full bg-gray-300 h-2 rounded mt-2">
-                <div class="bg-orange-500 h-2 rounded" style="width: 50%;"></div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                <i class="fas fa-wallet mr-2 text-orange-500"></i>
+                Budget Overview
+            </h2>
+            
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-gray-600">50% of budget used</span>
+                <span class="font-bold">$250 / $500</span>
             </div>
+            
+            <div class="w-full bg-gray-200 h-3 rounded-full mt-2">
+                <div class="bg-orange-500 h-3 rounded-full progress-bar" style="width: 50%;"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-gray-700 mb-2">Paid</h3>
+                    <p class="text-2xl font-bold text-green-600">$150</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-gray-700 mb-2">Pending</h3>
+                    <p class="text-2xl font-bold text-yellow-500">$100</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-gray-700 mb-2">Remaining</h3>
+                    <p class="text-2xl font-bold text-orange-500">$250</p>
+                </div>
+            </div>
+        </div>
     </main>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const invitedUsersContainer = document.getElementById('invitedUsersContainer');
+            const userSearchInput = document.getElementById('userSearchInput');
+            const addUserBtn = document.getElementById('addUserBtn');
+            
+            // Sample user data (in a real app, this would come from a database)
+            const sampleUsers = [
+                { id: 1, name: "You", email: "you@example.com", avatar: "https://via.placeholder.com/40", isYou: true },
+                { id: 2, name: "Alex Johnson", email: "alex@example.com", avatar: "https://i.pravatar.cc/40?img=1" },
+                { id: 3, name: "Maria Garcia", email: "maria@example.com", avatar: "https://i.pravatar.cc/40?img=2" },
+                { id: 4, name: "James Smith", email: "james@example.com", avatar: "https://i.pravatar.cc/40?img=3" }
+            ];
+            
+            // Add sample users (in a real app, you'd fetch these from your backend)
+            sampleUsers.forEach(user => {
+                addUserCard(user);
+            });
+            
+            // Add user button click handler
+            addUserBtn.addEventListener('click', function() {
+                const searchTerm = userSearchInput.value.trim();
+                if (searchTerm) {
+                    // In a real app, you would search your user database here
+                    // For demo purposes, we'll create a new user
+                    const newUser = {
+                        id: Date.now(), // Temporary ID
+                        name: searchTerm,
+                        email: `${searchTerm.toLowerCase()}@example.com`,
+                        avatar: `https://i.pravatar.cc/40?u=${searchTerm}`
+                    };
+                    
+                    addUserCard(newUser);
+                    userSearchInput.value = '';
+                    
+                    // Show success feedback
+                    showToast(`${newUser.name} added successfully!`, 'success');
+                } else {
+                    showToast('Please enter an email or username', 'error');
+                }
+            });
+            
+            // Function to add a user card
+            function addUserCard(user) {
+                const userCard = document.createElement('div');
+                userCard.className = 'user-card bg-gray-50 rounded-lg p-3 flex items-center min-w-[200px]';
+                userCard.innerHTML = `
+                    <img src="${user.avatar}" class="w-10 h-10 rounded-full mr-3" alt="${user.name}">
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-800">${user.name}</h3>
+                        <p class="text-xs text-gray-500 truncate">${user.email}</p>
+                    </div>
+                    ${user.isYou ? '' : '<button class="remove-user text-gray-400 hover:text-red-500 transition"><i class="fas fa-times"></i></button>'}
+                `;
+                
+                invitedUsersContainer.appendChild(userCard);
+                
+                // Add remove button functionality
+                if (!user.isYou) {
+                    const removeBtn = userCard.querySelector('.remove-user');
+                    removeBtn.addEventListener('click', function() {
+                        userCard.classList.add('opacity-0', 'scale-95');
+                        setTimeout(() => {
+                            userCard.remove();
+                            showToast(`${user.name} removed`, 'info');
+                        }, 300);
+                    });
+                }
+            }
+            
+            // Function to show toast notifications
+            function showToast(message, type) {
+                const toast = document.createElement('div');
+                const colors = {
+                    success: 'bg-green-500',
+                    error: 'bg-red-500',
+                    info: 'bg-blue-500'
+                };
+                
+                toast.className = `fixed bottom-4 right-4 text-white px-4 py-2 rounded-md shadow-lg ${colors[type]} transition transform translate-y-4 opacity-0`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-4', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                }, 10);
+                
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-4', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+            
+            // Simulate budget progress animation
+            setTimeout(() => {
+                const progressBar = document.querySelector('.progress-bar');
+                progressBar.style.width = '50%';
+            }, 500);
+        });
+    </script>
 </body>
 </html>
