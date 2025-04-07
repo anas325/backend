@@ -68,44 +68,10 @@
     <div class="login-card card p-4 shadow">
         <h2 class="text-center mb-3" data-i18n="login.title">Login</h2>
         <form method="post">
-            <div class="mb-3">
-                <label class="form-label" data-i18n="login.username">Username</label>
-                <input type="text" name="username" class="form-control" required autofocus>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" data-i18n="login.password">Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            
-            <!-- Option dynamique : Se souvenir de moi -->
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="rememberMe">
-                <label class="form-check-label" for="rememberMe" data-i18n="login.remember">Remember me</label>
-            </div>
-                <div class="alert alert-danger" data-i18n="login.error">Invalid login credentials</div>
-            
-            <button type="submit" class="btn w-100 mb-2" style="background-color: var(--primary-color); color: white;" data-i18n="login.button">Login</button>
-            
-            <!-- Option dynamique : Lien mot de passe oublié -->
-            <div class="text-center mt-2">
-                <a href="#" class="text-decoration-none" style="color: var(--primary-color);" data-i18n="login.forgot">Forgot password?</a>
-            </div>
-            
-            <!-- Option dynamique : Réseaux sociaux -->
-            <div class="mt-3 text-center">
-                <p class="text-muted" data-i18n="login.social">Or login with</p>
-                <div class="d-flex justify-content-center gap-2">
-                    <button type="button" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-google"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-facebook"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-twitter"></i>
-                    </button>
-                </div>
-            </div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+              
         </form>
     </div>
 

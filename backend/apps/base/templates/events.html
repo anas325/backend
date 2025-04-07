@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,36 +13,52 @@
             font-family: 'Roboto', sans-serif;
             background-color: #f7fafc;
         }
-        
+
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        
+
         .budget-card {
             transition: all 0.3s ease;
         }
-        
+
         .pulse {
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(249, 115, 22, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+            }
         }
-        
+
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     <nav class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-50">
         <div class="text-2xl font-bold text-black flex items-center">
@@ -60,18 +77,24 @@
                 <button class="text-gray-700 hover:text-orange-500 transition transform hover:scale-110" id="notifBtn">
                     <i class="fas fa-bell"></i>
                 </button>
-                <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                
-                <div class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50" id="notifDropdown">
+                <span
+                    class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+
+                <div class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50"
+                    id="notifDropdown">
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">New event invitation</a>
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Payment received</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Upcoming event reminder</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Upcoming event
+                        reminder</a>
                 </div>
             </div>
             <div class="relative">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transition" alt="User Avatar" id="userMenuBtn">
-                
-                <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" id="userDropdown">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                    class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transition"
+                    alt="User Avatar" id="userMenuBtn">
+
+                <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+                    id="userDropdown">
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log out</a>
@@ -79,21 +102,24 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container mx-auto p-6">
         <div class="flex justify-between items-center">
             <div>
                 <h1 class="text-3xl font-bold fade-in">Hi, Ella</h1>
-                <p class="text-gray-600 fade-in" style="animation-delay: 0.1s">Here's what's happening with your finances</p>
+                <p class="text-gray-600 fade-in" style="animation-delay: 0.1s">Here's what's happening with your
+                    finances</p>
             </div>
-            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition transform hover:scale-105 flex items-center">
+            <button
+                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition transform hover:scale-105 flex items-center">
                 <i class="fas fa-plus mr-2"></i> Create Event
             </button>
         </div>
-        
+
         <!-- Budget Cards with Animation -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in" style="animation-delay: 0.2s">
+            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in"
+                style="animation-delay: 0.2s">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500">Marketing Budget</p>
@@ -110,8 +136,9 @@
                     <div class="bg-red-500 h-2.5 rounded-full" style="width: 75%"></div>
                 </div>
             </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in" style="animation-delay: 0.3s">
+
+            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in"
+                style="animation-delay: 0.3s">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500">Operations Budget</p>
@@ -128,8 +155,9 @@
                     <div class="bg-green-500 h-2.5 rounded-full" style="width: 50%"></div>
                 </div>
             </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in pulse" style="animation-delay: 0.4s">
+
+            <div class="bg-white p-6 rounded-lg shadow-md budget-card hover:shadow-lg card-hover fade-in pulse"
+                style="animation-delay: 0.4s">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500">Research & Development</p>
@@ -147,7 +175,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Upcoming Events Section -->
         <div class="mt-12 fade-in" style="animation-delay: 0.5s">
             <div class="flex justify-between items-center">
@@ -156,99 +184,50 @@
                     View all <i class="fas fa-chevron-right ml-1 text-sm"></i>
                 </a>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition transform hover:-translate-y-1">
+                {% for event in events %}
+                <div
+                    class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition transform hover:-translate-y-1">
+
                     <div class="relative">
-                        <img src="https://source.unsplash.com/random/600x400/?jazz" alt="Jazz Festival" class="w-full h-48 object-cover">
+                        {% if event.cover_image %}
+                        <img src="{{event.cover_image.url}}" alt=""
+                            class="w-full h-48 object-cover">
+                        {% else %}
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                            No Image Available
+                        </div>
+                        {% endif %}
                         <div class="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
-                            <i class="fas fa-music mr-1"></i> Music
+                            {{event.category}}
                         </div>
                     </div>
                     <div class="p-4">
                         <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-bold">Jazz Festival</h3>
-                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Tomorrow</span>
+                            <h3 class="text-lg font-bold">{{event.name}}</h3>
+                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">{{event.date}}</span>
                         </div>
-                        <p class="text-gray-600 mt-2">Join us for the annual Jazz Fest this weekend.</p>
+                        <p class="text-gray-600 mt-2">{{event.description}}</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
-                            <i class="fas fa-map-marker-alt mr-2"></i> Central Park, NYC
+                            <i class="fas fa-map-marker-alt mr-2"></i> {{event.location}}
                         </div>
                         <div class="flex justify-between items-center mt-4">
-                            <div class="flex -space-x-2">
-                                <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs">+5</div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-dollar-sign mr-1"></i>
+                                <span>{{event.target_amount}}</span>
                             </div>
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition transform hover:scale-105">
+                            <button
+                                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition transform hover:scale-105">
                                 Learn More
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img src="https://source.unsplash.com/random/600x400/?gala" alt="Charity Gala" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 right-2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
-                            <i class="fas fa-hand-holding-heart mr-1"></i> Charity
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-bold">Charity Gala</h3>
-                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Nov 15</span>
-                        </div>
-                        <p class="text-gray-600 mt-2">Support local causes at the Charity Gala Night.</p>
-                        <div class="flex items-center mt-3 text-sm text-gray-500">
-                            <i class="fas fa-map-marker-alt mr-2"></i> Grand Ballroom
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="flex -space-x-2">
-                                <img src="https://randomuser.me/api/portraits/men/22.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <img src="https://randomuser.me/api/portraits/women/33.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs">+8</div>
-                            </div>
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition transform hover:scale-105">
-                                RSVP Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img src="https://source.unsplash.com/random/600x400/?yoga" alt="Yoga in Park" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                            <i class="fas fa-spa mr-1"></i> Wellness
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-bold">Yoga in Park</h3>
-                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Weekly</span>
-                        </div>
-                        <p class="text-gray-600 mt-2">Unwind with a morning yoga session in Central Park.</p>
-                        <div class="flex items-center mt-3 text-sm text-gray-500">
-                            <i class="fas fa-map-marker-alt mr-2"></i> Central Park, NYC
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="flex -space-x-2">
-                                <img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <img src="https://randomuser.me/api/portraits/women/23.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-8 h-8 rounded-full border-2 border-white">
-                                <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs">+12</div>
-                            </div>
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition transform hover:scale-105">
-                                Sign Up
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        
+
         <!-- Recent Transactions Section -->
         <div class="mt-12 fade-in" style="animation-delay: 0.6s">
             <h2 class="text-2xl font-bold">Recent Transactions</h2>
@@ -257,11 +236,21 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Event</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Amount</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="transactionsTable">
@@ -272,29 +261,29 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         // Dropdown menus
-        document.getElementById('notifBtn').addEventListener('click', function() {
+        document.getElementById('notifBtn').addEventListener('click', function () {
             document.getElementById('notifDropdown').classList.toggle('hidden');
             document.getElementById('userDropdown').classList.add('hidden');
         });
-        
-        document.getElementById('userMenuBtn').addEventListener('click', function() {
+
+        document.getElementById('userMenuBtn').addEventListener('click', function () {
             document.getElementById('userDropdown').classList.toggle('hidden');
             document.getElementById('notifDropdown').classList.add('hidden');
         });
-        
+
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('#notifBtn') ){
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('#notifBtn')) {
                 document.getElementById('notifDropdown').classList.add('hidden');
             }
             if (!event.target.closest('#userMenuBtn')) {
                 document.getElementById('userDropdown').classList.add('hidden');
             }
         });
-        
+
         // Animate budget numbers
         function animateValue(id, start, end, duration) {
             let startTimestamp = null;
@@ -310,13 +299,13 @@
             };
             window.requestAnimationFrame(step);
         }
-        
+
         // Start animations when page loads
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             animateValue("marketingBudget", 0, 45000, 1000);
             animateValue("operationsBudget", 0, 32000, 1000);
             animateValue("rdBudget", 0, 28000, 1000);
-            
+
             // Load transactions dynamically
             const transactions = [
                 { event: "Jazz Festival", amount: "$45.00", date: "Oct 12, 2023", status: "Completed", action: "View" },
@@ -324,14 +313,14 @@
                 { event: "Yoga in Park", amount: "$15.00", date: "Oct 8, 2023", status: "Completed", action: "View" },
                 { event: "Tech Conference", amount: "$120.00", date: "Oct 5, 2023", status: "Completed", action: "View" }
             ];
-            
+
             const tableBody = document.getElementById('transactionsTable');
             transactions.forEach(transaction => {
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50 transition';
-                
+
                 const statusClass = transaction.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800';
-                
+
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
@@ -358,10 +347,11 @@
                         ${transaction.action} <i class="fas fa-chevron-right ml-1"></i>
                     </td>
                 `;
-                
+
                 tableBody.appendChild(row);
             });
         });
     </script>
 </body>
+
 </html>
