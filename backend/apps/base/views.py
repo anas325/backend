@@ -8,27 +8,26 @@ from backend.apps.events.models import Event
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class home1(View,LoginRequiredMixin):
+class home1(LoginRequiredMixin, View):
     def get(self, request):
         logged_in_user = request.user
         return render(request, 'home1.html',{"user" : logged_in_user})
  
-class events(View,LoginRequiredMixin):
+class events(LoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.all()
         logged_in_user = request.user
-        return render(request, 'events.html',{"events" : events,"user" : logged_in_user})
+        return render(request, 'events.html', {"events": events, "user": logged_in_user})
 
-class create_event(View,LoginRequiredMixin):
+class create_event(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'create_event.html',{})
+        return render(request, 'create_event.html', {})
 
-class user_profile(View,LoginRequiredMixin):
+class user_profile(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'user_profile.html',{})
+        return render(request, 'user_profile.html', {})
 
-
-class profile(View,LoginRequiredMixin):
-     def get(self, request, id):
+class profile(LoginRequiredMixin, View):
+    def get(self, request, id):
         user = User.objects.get(id=id)
-        return render(request, 'user_profile.html',{'user' : user})
+        return render(request, 'user_profile.html', {'user': user})
