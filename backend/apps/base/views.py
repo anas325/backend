@@ -16,7 +16,8 @@ class home1(View,LoginRequiredMixin):
 class events(View,LoginRequiredMixin):
     def get(self, request):
         events = Event.objects.all()
-        return render(request, 'events.html',{"events" : events})
+        logged_in_user = request.user
+        return render(request, 'events.html',{"events" : events,"user" : logged_in_user})
 
 class create_event(View,LoginRequiredMixin):
     def get(self, request):
