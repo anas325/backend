@@ -4,7 +4,7 @@ from django.apps import apps
 
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(max_length=150, unique=False)
     description = models.TextField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
@@ -21,12 +21,15 @@ class Event(models.Model):
         return self.name
     
 
-class task(models.Model):
+class Task(models.Model):
     id = models.AutoField(primary_key=True) 
     title = models.CharField(max_length=150, unique=False)
     description = models.CharField(max_length=255, unique=False)
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'),
                                                     ('completed', 'Completed')], default='pending')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tasks')
+    
+    
     def __str__(self):
         return self.title
 

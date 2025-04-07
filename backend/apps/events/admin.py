@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, task, Expense
+from .models import Event, Task, Expense
 # Register your models here.
 
 
