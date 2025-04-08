@@ -34,4 +34,4 @@ class user_profile(LoginRequiredMixin, View):
 class profile(LoginRequiredMixin, View):
     def get(self, request, id):
         user = User.objects.get(id=id)
-        return render(request, 'user_profile.html', {'user': user})
+        return render(request, 'user_profile.html',{'user' : user})

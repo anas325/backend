@@ -4,3 +4,5 @@ from .models import Event, Task, Expense
 
 
 admin.site.register(Event)
+admin.site.register(task)
+admin.site.register(Expense)

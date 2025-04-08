@@ -43,3 +43,8 @@ class Expense(models.Model):
 
     def __str__(self):
         return f"{self.event.name} - {self.amount}"
+    
+
+class Participant(models.Model):
+    name = models.CharField(max_length=100)
+    avatar_url = models.URLField()
