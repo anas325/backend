@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('', views.home1.as_view(), name='home'),
     #path('', views.about.as_view(), name='about'),
@@ -13,5 +14,5 @@ urlpatterns = [
     path('user/<int:id>/', views.profile.as_view(), name='user_profile'),
     path('details_events/', views.detail_events.as_view(), name='details_events'),
     path('event/<int:id>/', views.detail_events.as_view(), name='detail_events'),
-    path('my_events/', views.my_events.as_view(), name='my_events'),
+    #path('my_events/', views.my_events.as_view(), name='my_events'),
 ]

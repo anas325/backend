@@ -28,9 +28,16 @@
             </div>
         </div>
         <div class="relative">
+            {% if user.profile_picture %}
             <img src="{{user.profile_picture.url}}"
-                class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transition"
-                alt="User Avatar" id="userMenuBtn">
+            class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transition"
+            alt="User Avatar" id="userMenuBtn">
+                            {% else %}
+                            <div class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transitiond">
+                                No Image Available
+                            </div>
+                            {% endif %}
+           
 
             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
                 id="userDropdown">

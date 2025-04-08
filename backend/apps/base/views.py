@@ -35,3 +35,9 @@ class profile(LoginRequiredMixin, View):
     def get(self, request, id):
         user = User.objects.get(id=id)
         return render(request, 'user_profile.html',{'user' : user})
+    
+class detail_events(LoginRequiredMixin, View):
+    def get(self, request, id):
+        event = Event.objects.get(id=id)
+        logged_in_user = request.user
+        return render(request, 'detail_events.html', {"event": event,"user": logged_in_user})
