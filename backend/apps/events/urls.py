@@ -7,7 +7,7 @@ from . import views
 router = DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'tasks', TaskViewSet)
-router.register(r'expenses', ExpanseViewSet)
+router.register(r'expanses', ExpanseViewSet)
 
 urlpatterns = [
     path('', views.events.as_view(), name='events'),

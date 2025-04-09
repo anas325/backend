@@ -36,6 +36,8 @@ class Task(models.Model):
 
 class Expense(models.Model):
     id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=150, unique=False)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='payed_expenses')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='expenses')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()

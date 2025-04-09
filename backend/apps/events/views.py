@@ -25,12 +25,16 @@ class EventViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [AllowAny]
+    def create(self, request, *args, **kwargs):
+        super().create(request, *args, **kwargs)
+        return redirect('/events/')  
 
 class ExpanseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpanseSerializer
-    permission_classes = [AllowAny]
+    def create(self, request, *args, **kwargs):
+            super().create(request, *args, **kwargs)
+            return redirect(f'/events/{request.data["event"]}/')  # Redirect after creating
 
 
 class events(LoginRequiredMixin, View):
@@ -51,5 +55,23 @@ class create_event(LoginRequiredMixin, View):
 class detail_events(LoginRequiredMixin, View):
     def get(self, request, id):
         event = Event.objects.get(id=id)
+        tasks = event.tasks.all()
+        participants = event.participants.all()
+        expenses = event.expenses.all()
         logged_in_user = request.user
-        return render(request, 'detail_events.html', {"event": event,"user": logged_in_user})
+        total_expenses = 0
+        for expense in expenses:
+            total_expenses += expense.amount
+        expense_proportion = 0
+        if event.target_amount:
+            expense_proportion = (total_expenses / event.target_amount) * 100
+        else:
+            expense_proportion = 0
+        return render(request, 'detail_events.html', {"event": event,
+                                            "user": logged_in_user,
+                                            "tasks": tasks,
+                                            "participants": participants,
+                                            "expenses": expenses,
+                                            "total_expenses": total_expenses,
+                                            "expense_proportion": int(expense_proportion)
+                                            })
