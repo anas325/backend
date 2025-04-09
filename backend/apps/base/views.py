@@ -27,9 +27,7 @@ class create_event(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'create_event.html', {})
 
-class user_profile(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'user_profile.html', {})
+
 
 class profile(LoginRequiredMixin, View):
     def get(self, request, id):

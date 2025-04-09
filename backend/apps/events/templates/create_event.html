@@ -32,7 +32,7 @@
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Event</h1>
             
-            <form method="POST" enctype="multipart/form-data" action="/api/events/">
+            <form method="POST" enctype="multipart/form-data" action="/events/events/">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
@@ -299,7 +299,7 @@
         animateValue("operationsBudget", 0, 32000, 1000);
         animateValue("rdBudget", 0, 28000, 1000);
 
-        // Load transactions dynamically
+        // Load trans   s dynamically
         const transactions = [
             { event: "Jazz Festival", amount: "$45.00", date: "Oct 12, 2023", status: "Completed", action: "View" },
             { event: "Charity Gala", amount: "$75.00", date: "Oct 10, 2023", status: "Pending", action: "View" },
