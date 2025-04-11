@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.apps import apps
+from django.db.models import Sum
 
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -19,6 +20,8 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    def total_expenses(self):
+        return self.expenses.aggregate(total=Sum('amount'))['total'] or 0
     
 
 class Task(models.Model):

@@ -10,9 +10,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class home1(LoginRequiredMixin, View):
     def get(self, request):
+        all_events = Event.objects.all()
         logged_in_user = request.user
-        return render(request, 'home1.html',{"user" : logged_in_user})
- 
+        upcomming_events = [event for event in all_events if (logged_in_user in event.participants.all() or logged_in_user == event.organizer)]
+        event_count = len(upcomming_events)
+        paticipants = [event.participants.all() for event in all_events]
+        participant_count = len(set(participant for sublist in paticipants for participant in sublist))
+        total_expenses = sum(logged_in_user.payed_expenses.filter(event__in=all_events).values_list('amount', flat=True))
+
+        return render(request, 'home1.html',{"user" : logged_in_user,
+                                            "event_count": event_count,
+                                            "participant_count": participant_count,
+                                            "total_expenses": total_expenses,
+                                            "events": upcomming_events[-4:-1] if len(upcomming_events) > 4 else upcomming_events,
+                                            })
+
 class events(LoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.all()
@@ -38,4 +50,6 @@ class detail_events(LoginRequiredMixin, View):
     def get(self, request, id):
         event = Event.objects.get(id=id)
         logged_in_user = request.user
-        return render(request, 'detail_events.html', {"event": event,"user": logged_in_user})
+        return render(request, 'detail_events.html', {"event": event,
+                                                    "user": logged_in_user
+                                                    })

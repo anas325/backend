@@ -86,7 +86,7 @@
                         
                         <div>
                             <p class="font-medium">{{user.first_name}} {{user.last_name}}</p>
-                            <p class="text-xs text-gray-500">Premium Member</p>
+                           
                         </div>
                     </div>
                 </a>
@@ -136,25 +136,25 @@
                     <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-16 h-16 bg-orange-100 rounded-bl-full"></div>
                         <p class="text-gray-500">Upcoming Events</p>
-                        <p class="text-3xl font-bold my-2" id="upcomingEvents">3</p>
+                        <p class="text-3xl font-bold my-2" id="upcomingEvents" id="upcomingEvents">{{event_count}}</p>
                         <p class="text-green-500 flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 1 new this week
+                            
                         </p>
                     </div>
                     <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-16 h-16 bg-blue-100 rounded-bl-full"></div>
                         <p class="text-gray-500">Participants</p>
-                        <p class="text-3xl font-bold my-2" id="totalParticipants">42</p>
+                        <p class="text-3xl font-bold my-2" id="totalParticipants" id="participants">{{participant_count}}</p>
                         <p class="text-green-500 flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 5 new today
+                            
                         </p>
                     </div>
                     <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-16 h-16 bg-purple-100 rounded-bl-full"></div>
                         <p class="text-gray-500">Total Expenses</p>
-                        <p class="text-3xl font-bold my-2" id="totalExpenses">€1,245</p>
+                        <p class="text-3xl font-bold my-2" id="totalExpenses" id="total_expenses">{{total_expenses}}</p>
                         <p class="text-red-500 flex items-center">
-                            <i class="fas fa-arrow-down mr-1"></i> 10% from last month
+                            
                         </p>
                     </div>
                 </div>
@@ -167,7 +167,26 @@
                     </div>
                     
                     <div class="space-y-4" id="recentEvents">
-                        <!-- Dynamically loaded events will appear here -->
+                        {%for event in events %}
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg shadow hover:shadow-md transition">
+                            {% if event.cover_image %}
+                            <img src="{{ event.cover_image.url }}" alt="{{ event.name }}" class="w-16 h-16 rounded-lg object-cover">
+                        {% else %}
+                        <div class="w-16 h-16 rounded-lg object-cover bg-gray-200 justify-center flex items-center text-gray-500">
+                            No Image
+                        </div>
+                        {% endif %}
+                           
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-800">{{ event.name }}</h3>
+                                <p class="text-sm text-gray-500">Date: {{ event.date }}</p>
+                                <p class="text-sm text-gray-500">Expenses: ${{ event.total_expenses|floatformat:2 }}</p>
+                            </div>
+                            <a href="/events/{{ event.id }}" class="text-orange-500 hover:text-orange-600 text-sm font-medium">
+                                View Details
+                            </a>
+                        </div>
+                        {%endfor%}
                     </div>
                 </div>
                 
@@ -191,7 +210,6 @@
         // Dynamic banner images
         const bannerImages = [
             'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
-            'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf',
             'https://images.unsplash.com/photo-1492684223066-81342ee5ff30',
             'https://images.unsplash.com/photo-1492681290082-e932832941e6'
         ];
@@ -221,50 +239,10 @@
         }
         
         // Recent events data
-        const recentEvents = [
-            {
-                title: "Beach Weekend Getaway",
-                date: "June 15-17, 2023",
-                participants: 8,
-                status: "active"
-            },
-            {
-                title: "Birthday Dinner",
-                date: "May 28, 2023",
-                participants: 12,
-                status: "completed"
-            },
-            {
-                title: "Team Building Workshop",
-                date: "July 5, 2023",
-                participants: 15,
-                status: "upcoming"
-            }
-        ];
+       
         
         // Load recent events
-        function loadRecentEvents() {
-            const container = document.getElementById('recentEvents');
-            container.innerHTML = '';
-            
-            recentEvents.forEach(event => {
-                const statusColor = event.status === 'active' ? 'bg-green-100 text-green-800' : 
-                                  event.status === 'completed' ? 'bg-gray-100 text-gray-800' : 
-                                  'bg-blue-100 text-blue-800';
-                
-                const eventElement = document.createElement('div');
-                eventElement.className = 'flex justify-between items-center p-4 hover:bg-gray-50 rounded-lg transition';
-                eventElement.innerHTML = `
-                    <div>
-                        <h3 class="font-medium">${event.title}</h3>
-                        <p class="text-sm text-gray-500">${event.date} • ${event.participants} participants</p>
-                    </div>
-                    <span class="px-3 py-1 text-xs rounded-full ${statusColor}">${event.status}</span>
-                `;
-                
-                container.appendChild(eventElement);
-            });
-        }
+        
         
         // Animated counter for stats
         function animateValue(id, start, end, duration) {
@@ -281,19 +259,25 @@
             window.requestAnimationFrame(step);
         }
         
-        // Toggle sidebar on mobile
+        // Toggle sidebar on all devices
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             document.querySelector('aside').classList.toggle('hidden');
             document.querySelector('aside').classList.toggle('absolute');
             document.querySelector('aside').classList.toggle('z-10');
         });
-        
+
+        // Ensure sidebar is visible on larger screens
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+            document.querySelector('aside').classList.remove('hidden', 'absolute', 'z-10');
+            }
+        });
         // Initialize on load
         window.onload = function() {
             loadRecentEvents();
-            animateValue('upcomingEvents', 0, 3, 1000);
-            animateValue('totalParticipants', 0, 42, 1000);
-            animateValue('totalExpenses', 0, 1245, 1000);
+            animateValue('upcomingEvents', 0, document.getElementById("upcomingEvents").innerText, 1000);
+            animateValue('totalParticipants', 0, document.getElementById("participants").innerText, 1000);
+            animateValue('totalExpenses', 0, document.getElementById("total_expenses").innerText, 1000);
         };
     </script>
 </body>
