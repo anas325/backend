@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Group
+from .models import User, Group, notification
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -28,3 +28,4 @@ admin.site.register(User, CustomUserAdmin)
 
 #admin.site.register(User, UserAdmin)
 admin.site.register(Group)
+admin.site.register(notification)

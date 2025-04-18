@@ -53,3 +53,23 @@ class detail_events(LoginRequiredMixin, View):
         return render(request, 'detail_events.html', {"event": event,
                                                     "user": logged_in_user
                                                     })
+    
+class notification(LoginRequiredMixin, View):
+    def get(self, request):
+        logged_in_user = request.user
+        notifications = logged_in_user.notifications.all()
+        return render(request, 'notifications.html', {"user": logged_in_user,
+                                                    "notifications": notifications,
+                                                    })
+    def post(self, request):
+        logged_in_user = request.user
+        notification_id = request.POST.get('notification_id')
+        notification = logged_in_user.notifications.get(id=notification_id)
+        notification.is_read = True
+        notification.save()
+        notifications = logged_in_user.notifications.all().order_by('-created_at')
+        
+        return render(request, 'notifications.html', {
+            "user": logged_in_user,
+            "notifications": notifications,
+        })
