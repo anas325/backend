@@ -12,15 +12,131 @@
             font-family: 'Roboto', sans-serif;
             transition: all 0.3s ease;
         }
+        
+        /* Nouveau style de la sidebar */
+        .sidebar {
+            width: 80px;
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8f4e5 0%, #f5eddc 100%);
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+
+        .sidebar:hover {
+            width: 260px;
+        }
+
+        .sidebar-content {
+            padding: 30px 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            padding: 0 10px 30px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-logo i {
+            font-size: 28px;
+            color: #e67e22;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .sidebar-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            opacity: 0;
+            transition: opacity 0.2s ease 0.1s;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .sidebar-logo-text {
+            opacity: 1;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+        }
+
         .sidebar-link {
-            transition: all 0.2s ease;
-            padding: 10px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 5px;
             border-radius: 8px;
+            transition: all 0.2s ease;
+            color: #34495e;
+            position: relative;
+            overflow: hidden;
         }
+
+        .sidebar-link i {
+            font-size: 20px;
+            min-width: 40px;
+            text-align: center;
+            transition: all 0.2s ease;
+            color: #7f8c8d;
+        }
+
+        .sidebar-link-text {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar:hover .sidebar-link-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         .sidebar-link:hover {
-            transform: translateX(5px);
-            background-color: rgba(249, 115, 22, 0.1);
+            background: rgba(230, 126, 34, 0.1);
+            color: #e67e22;
         }
+
+        .sidebar-link:hover i {
+            color: #e67e22;
+        }
+
+        .sidebar-link.active {
+            background: rgba(230, 126, 34, 0.15);
+            color: #e67e22;
+        }
+
+        .sidebar-link.active i {
+            color: #e67e22;
+        }
+
+        .sidebar-user {
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: auto;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            transition: margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 260px;
+        }
+
+        /* Styles existants */
         .stat-card {
             transition: all 0.3s ease;
         }
@@ -43,151 +159,171 @@
 </head>
 <body class="bg-gray-100">
 
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-yellow-200 shadow-md p-5 transform transition-all duration-300 ease-in-out">
-            <div class="flex items-center justify-between">
-                <div class="text-2xl font-bold text-black flex items-center">
-                    <i class="fas fa-users mr-2 text-orange-500"></i> WeSplit
+    <!-- Nouvelle Sidebar Professionnelle -->
+    <aside class="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-logo">
+                <i class="fas fa-users"></i>
+                <span class="sidebar-logo-text">WeSplit</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="/events" class="sidebar-link active">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="sidebar-link-text">All Events</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-comments"></i>
+                    <span class="sidebar-link-text">Group Chat</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-cog"></i>
+                    <span class="sidebar-link-text">Settings</span>
+                </a>
+                <a href="/create_event" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="sidebar-link-text">Create Event</span>
+                </a>
+                <a href="/events" class="sidebar-link">
+                    <i class="fas fa-history"></i>
+                    <span class="sidebar-link-text">My Events</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-user">
+                <a href="/user/{{user.id}}" class="flex items-center px-3 py-2">
+                    {% if user.profile_picture %}
+                    <img src="{{user.profile_picture.url}}" alt="User" class="w-10 h-10 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-user text-gray-500"></i>
+                    </div>
+                    {% endif %}
+                    <div class="user-info ml-3 overflow-hidden">
+                        <p class="user-name font-medium text-sm truncate" style="opacity: 0; transition: opacity 0.3s ease; color: #2c3e50">{{user.first_name}} {{user.last_name}}</p>
+                        <p class="user-role text-xs truncate" style="opacity: 0; transition: opacity 0.3s ease; color: #7f8c8d">Premium Member</p>
+                    </div>
+                </a>
+                <form method="POST" action="{% url 'logout' %}" class="mt-3">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-link w-full text-left">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="sidebar-link-text">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content p-6 overflow-y-auto">
+        <!-- Banner with changing background -->
+        <div class="banner w-full h-60 bg-cover bg-center rounded-lg shadow-md mb-6"
+            style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');"
+            id="dynamicBanner">
+            <div class="w-full h-full flex items-end p-6 bg-gradient-to-t from-black/60 to-transparent rounded-lg">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">Bonjour, {{user.first_name}} </h1>
+                    <p class="text-white/90">Créez votre prochain événement dès maintenant !</p>
                 </div>
-                <button id="sidebarToggle" class="md:hidden text-gray-600">
-                    <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <div class="container mx-auto">
+            <!-- Quick Actions -->
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button class="flex items-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition">
+                    <i class="fas fa-plus mr-2"></i> Quick Event
+                </button>
+                <button class="flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg transition border">
+                    <i class="fas fa-users mr-2"></i> Invite Friends
+                </button>
+                <button class="flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg transition border">
+                    <i class="fas fa-bell mr-2"></i> Notifications
                 </button>
             </div>
             
-            <nav class="mt-8 space-y-2">
-                <a href="/events" class="sidebar-link flex items-center text-orange-500 font-semibold bg-orange-50">
-                    <i class="fas fa-calendar-alt mr-3"></i> All events
-                </a>
-                <a href="#" class="sidebar-link flex items-center text-gray-600 hover:text-orange-500">
-                    <i class="fas fa-comments mr-3"></i> Group Chat
-                </a>
-                <a href="#" class="sidebar-link flex items-center text-gray-600 hover:text-orange-500">
-                    <i class="fas fa-cog mr-3"></i> Settings
-                </a>
-                <a href="/create_event" class="sidebar-link flex items-center text-gray-600 hover:text-orange-500">
-                    <i class="fas fa-plus-circle mr-3"></i> Create Event
-                </a>
-                <a href="/events" class="sidebar-link flex items-center text-gray-600 hover:text-orange-500">
-                    <i class="fas fa-history mr-3"></i> My Events
-                </a>
-                
-                <!-- User Profile -->
-                <div class="mt-10 pt-6 border-t border-orange-200">
-                    <a href="/user/{{user.id}}">
-                    <div class="flex items-center">
-                        {% if user.profile_picture %}
-                        <img src="{{user.profile_picture.url}}" alt="User" class="w-10 h-10 rounded-full mr-3">
-                        {% else %}
-                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center  text-gray-500 mr-3">
-                            No Image
-                        </div>
-                        {% endif %}
-                        
-                        <div>
-                            <p class="font-medium">{{user.first_name}} {{user.last_name}}</p>
-                            <p class="text-xs text-gray-500">Premium Member</p>
-                        </div>
-                    </div>
-                </a>
-                   
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="mt-4 w-full py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition">
-                            <i class="fas fa-sign-out-alt mr-2"></i>
-                            Logout
-                        </button>
-                    </form>
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-orange-100 rounded-bl-full"></div>
+                    <p class="text-gray-500">Upcoming Events</p>
+                    <p class="text-3xl font-bold my-2" id="upcomingEvents">3</p>
+                    <p class="text-green-500 flex items-center">
+                        <i class="fas fa-arrow-up mr-1"></i> 1 new this week
+                    </p>
                 </div>
-            </nav>
-        </aside>
-        
-
-        <!-- Main Content -->
-        <main class="flex-1 p-6 overflow-y-auto">
-            <!-- Banner with changing background -->
-            <div class="banner w-full h-60 bg-cover bg-center rounded-lg shadow-md mb-6 "
-                style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');"
-                id="dynamicBanner">
-                <div class="w-full h-full flex items-end p-6 bg-gradient-to-t from-black/60 to-transparent rounded-lg">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white">Bonjour, {{user.first_name}} </h1>
-                        <p class="text-white/90">Créez votre prochain événement dès maintenant !</p>
-                    </div>
+                <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-blue-100 rounded-bl-full"></div>
+                    <p class="text-gray-500">Participants</p>
+                    <p class="text-3xl font-bold my-2" id="totalParticipants">42</p>
+                    <p class="text-green-500 flex items-center">
+                        <i class="fas fa-arrow-up mr-1"></i> 5 new today
+                    </p>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-purple-100 rounded-bl-full"></div>
+                    <p class="text-gray-500">Total Expenses</p>
+                    <p class="text-3xl font-bold my-2" id="totalExpenses">€1,245</p>
+                    <p class="text-red-500 flex items-center">
+                        <i class="fas fa-arrow-down mr-1"></i> 10% from last month
+                    </p>
                 </div>
             </div>
             
-            <div class="container mx-auto">
-                <!-- Quick Actions -->
-                <div class="flex flex-wrap gap-4 mb-6">
-                    <button class="flex items-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition">
-                        <i class="fas fa-plus mr-2"></i> Quick Event
-                    </button>
-                    <button class="flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg transition border">
-                        <i class="fas fa-users mr-2"></i> Invite Friends
-                    </button>
-                    <button class="flex items-center px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg transition border">
-                        <i class="fas fa-bell mr-2"></i> Notifications
-                    </button>
+            <!-- Recent Events -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Recent Events</h2>
+                    <button class="text-orange-500 hover:text-orange-600">View All</button>
                 </div>
                 
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-orange-100 rounded-bl-full"></div>
-                        <p class="text-gray-500">Upcoming Events</p>
-                        <p class="text-3xl font-bold my-2" id="upcomingEvents">3</p>
-                        <p class="text-green-500 flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 1 new this week
-                        </p>
-                    </div>
-                    <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-blue-100 rounded-bl-full"></div>
-                        <p class="text-gray-500">Participants</p>
-                        <p class="text-3xl font-bold my-2" id="totalParticipants">42</p>
-                        <p class="text-green-500 flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 5 new today
-                        </p>
-                    </div>
-                    <div class="stat-card bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-purple-100 rounded-bl-full"></div>
-                        <p class="text-gray-500">Total Expenses</p>
-                        <p class="text-3xl font-bold my-2" id="totalExpenses">€1,245</p>
-                        <p class="text-red-500 flex items-center">
-                            <i class="fas fa-arrow-down mr-1"></i> 10% from last month
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Recent Events -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-bold">Recent Events</h2>
-                        <button class="text-orange-500 hover:text-orange-600">View All</button>
-                    </div>
-                    
-                    <div class="space-y-4" id="recentEvents">
-                        <!-- Dynamically loaded events will appear here -->
-                    </div>
-                </div>
-                
-                <!-- Quick Tips -->
-                <div class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-100">
-                    <h2 class="text-xl font-bold text-orange-600 mb-3 flex items-center">
-                        <i class="fas fa-lightbulb mr-2"></i> Quick Tip
-                    </h2>
-                    <p class="text-orange-800" id="randomTip">
-                        Use the "Quick Event" button to create an event in just a few clicks!
-                    </p>
-                    <button class="mt-3 text-orange-600 hover:text-orange-700 text-sm" onclick="changeTip()">
-                        <i class="fas fa-sync-alt mr-1"></i> Show Another Tip
-                    </button>
+                <div class="space-y-4" id="recentEvents">
+                    <!-- Dynamically loaded events will appear here -->
                 </div>
             </div>
-        </main>
-    </div>
+            
+            <!-- Quick Tips -->
+            <div class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-100">
+                <h2 class="text-xl font-bold text-orange-600 mb-3 flex items-center">
+                    <i class="fas fa-lightbulb mr-2"></i> Quick Tip
+                </h2>
+                <p class="text-orange-800" id="randomTip">
+                    Use the "Quick Event" button to create an event in just a few clicks!
+                </p>
+                <button class="mt-3 text-orange-600 hover:text-orange-700 text-sm" onclick="changeTip()">
+                    <i class="fas fa-sync-alt mr-1"></i> Show Another Tip
+                </button>
+            </div>
+        </div>
+    </main>
 
     <script>
+        // Animation du nom d'utilisateur au survol
+        const sidebar = document.querySelector('.sidebar');
+        const userName = document.querySelector('.user-name');
+        const userRole = document.querySelector('.user-role');
+        
+        sidebar.addEventListener('mouseenter', () => {
+            setTimeout(() => {
+                userName.style.opacity = '1';
+                userRole.style.opacity = '1';
+            }, 150);
+        });
+        
+        sidebar.addEventListener('mouseleave', () => {
+            userName.style.opacity = '0';
+            userRole.style.opacity = '0';
+        });
+
+        // Highlight active link
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+
         // Dynamic banner images
         const bannerImages = [
             'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
@@ -280,13 +416,6 @@
             };
             window.requestAnimationFrame(step);
         }
-        
-        // Toggle sidebar on mobile
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.querySelector('aside').classList.toggle('hidden');
-            document.querySelector('aside').classList.toggle('absolute');
-            document.querySelector('aside').classList.toggle('z-10');
-        });
         
         // Initialize on load
         window.onload = function() {
