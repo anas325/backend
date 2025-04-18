@@ -75,3 +75,19 @@ class detail_events(LoginRequiredMixin, View):
                                             "total_expenses": total_expenses,
                                             "expense_proportion": int(expense_proportion)
                                             })
+
+
+class participants(LoginRequiredMixin, View):
+    def post(self, request):
+        event_id = request.POST.get('event')
+        event = Event.objects.get(id=event_id)
+        id = event.id
+        user = request.user
+        if user not in event.participants.all():
+            event.participants.add(user)
+            event.save()
+            event.organizer.notifications.create(
+                user=user,
+                message=f"{user.username} has joined the event {event.name}",
+            )
+        return redirect(f'/events/{id}/')

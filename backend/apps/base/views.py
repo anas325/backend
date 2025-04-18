@@ -57,7 +57,7 @@ class detail_events(LoginRequiredMixin, View):
 class notification(LoginRequiredMixin, View):
     def get(self, request):
         logged_in_user = request.user
-        notifications = logged_in_user.notifications.all()
+        notifications = logged_in_user.notifications.all().order_by('-created_at')
         return render(request, 'notifications.html', {"user": logged_in_user,
                                                     "notifications": notifications,
                                                     })
