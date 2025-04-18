@@ -13,11 +13,12 @@
             <i class="fas fa-search"></i>
         </button>
         <div class="relative">
-            <button class="text-gray-700 hover:text-orange-500 transition transform hover:scale-110" id="notifBtn">
+            <a href="{%url 'notification'%}" class="text-gray-700 hover:text-orange-500 transition transform hover:scale-110" id="notifBtn">
                 <i class="fas fa-bell"></i>
-            </button>
+            </a>
             <span
-                class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {{ user.notifications.count }} 1000</span>
 
             <div class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50"
                 id="notifDropdown">
