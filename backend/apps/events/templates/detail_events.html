@@ -163,20 +163,21 @@
         </div>
 
         <!-- Contenu des Onglets -->
-        <div class="tab-content fade-in">
+        <div class=" fade-in">
             <!-- Section Dépenses -->
             <div class="mb-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Dépenses récentes</h2>
-                    <button id="addExpenseBtn"
-                        class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center transition">
-                        <i class="fas fa-plus mr-2"></i> Ajouter une dépense
-                    </button>
-                </div>
+                
                 <!-- Added "Total des dépenses" -->
 
                 <!-- Liste des Dépenses -->
-                <div class="grid gap-4" id="expenses">
+                <div class="tab-content gap-4" id="expenses">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Dépenses récentes</h2>
+                        <button id="addExpenseBtn"
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center transition">
+                            <i class="fas fa-plus mr-2"></i> Ajouter une dépense
+                        </button>
+                    </div>
                     <!-- Les dépenses seront ajoutées dynamiquement ici -->
                     {% for expense in expenses %}
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
@@ -205,7 +206,6 @@
                     <div class="mb-8">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4">Participants</h2>
                         <div class="grid gap-4">
-                            <h1>hhh</h1>
                             {% for participant in participants %}
                             <div class="flex items-center bg-white p-4 rounded-lg shadow-md border border-gray-200">
                                 <img src="{{ participant.profile_picture.url }}" alt="{{ participant.username }}"
@@ -388,6 +388,7 @@
         document.querySelectorAll('.tab-button').forEach(button => {
         button.addEventListener('click', () => {
             const tab = button.getAttribute('data-tab');
+            
 
             // Remove active state from all buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
@@ -406,6 +407,7 @@
 
             // Show the selected tab content
             const selectedContent = document.getElementById(tab);
+            console.log(selectedContent); // Debugging line
             if (selectedContent) {
                 selectedContent.classList.remove('hidden');
             }

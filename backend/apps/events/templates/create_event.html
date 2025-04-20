@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,112 +12,119 @@
         body {
             font-family: 'Roboto', sans-serif;
         }
+
         .bg-gray-100 {
             background-color: #f7fafc;
         }
+
         .user-card {
             transition: all 0.3s ease;
         }
+
         .user-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .progress-bar {
             transition: width 0.5s ease-in-out;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
-   {% include 'navbar.html' %}
+    {% include 'navbar.html' %}
     <main class="flex-1 p-6 max-w-4xl mx-auto">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Event</h1>
-            
+
             <form method="POST" enctype="multipart/form-data" action="/events/events/">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label class="block text-gray-700 mb-2">Event Name</label>
-                        <input type="text" name="name" placeholder="Enter event name" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent" required>
+                        <input type="text" name="name" placeholder="Enter event name"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            required>
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-2">Target Amount</label>
-                        <input type="number" name="target_amount" placeholder="0.00" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="number" name="target_amount" placeholder="0.00"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-2">Date</label>
-                        <input type="date" name="date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="date" name="date"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-2">Target Date</label>
-                        <input type="date" name="target_date" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="date" name="target_date"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-gray-700 mb-2">Location</label>
-                        <input type="text" name="location" placeholder="Enter location" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="text" name="location" placeholder="Enter location"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-gray-700 mb-2">Description</label>
-                        <textarea name="description" placeholder="Enter event description" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
+                        <textarea name="description" placeholder="Enter event description"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-2">Category</label>
-                        <input type="text" name="category" placeholder="Enter category" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="text" name="category" placeholder="Enter category"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                     <div class="mb-3">
                         <label class="block text-gray-700 mb-2">Event Image</label>
-                        <input type="file" name="cover_image" accept="image/*" class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <input type="file" name="cover_image" accept="image/*"
+                            class="w-full border p-2 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
                 </div>
                 <input type="hidden" name="organizer" id="invitedUsers" value="{{user.id}}">
                 <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-center">
-                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition">
+                    <button type="submit"
+                        class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition">
                         <i class="fas fa-calendar-plus mr-2"></i> Create Event
                     </button>
                 </div>
             </form>
         </div>
-    
+
         <!-- Budget Section -->
-        <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
-                <i class="fas fa-wallet mr-2 text-orange-500"></i>
-                Budget Overview
-            </h2>
-            
-            <div class="flex justify-between items-center mb-1">
-                <span class="text-gray-600">50% of budget used</span>
-                <span class="font-bold">$250 / $500</span>
-            </div>
-            
-            <div class="w-full bg-gray-200 h-3 rounded-full mt-2">
-                <div class="bg-orange-500 h-3 rounded-full progress-bar" style="width: 50%;"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-medium text-gray-700 mb-2">Paid</h3>
-                    <p class="text-2xl font-bold text-green-600">$150</p>
+        <div class="space-y-4 bg-white p-6 rounded-lg shadow-md mt-3" id="recentEvents">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Recent Events</h2>
+            <!-- Recent events will be dynamically loaded here -->
+            {% for event in events %}
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                    {% if event.cover_image %}
+                    <img src="{{event.cover_image.url}}" alt="" class="w-full h-full rounded-full object-cover">
+                    {% elif event.image %}
+                    {% else %}
+                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fas fa-image text-gray-500"></i>
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-medium text-gray-700 mb-2">Pending</h3>
-                    <p class="text-2xl font-bold text-yellow-500">$100</p>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-semibold">{{ event.name}}</h3>
+                    <p class="text-gray-600">{{ event.date }}</p>
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-medium text-gray-700 mb-2">Remaining</h3>
-                    <p class="text-2xl font-bold text-orange-500">$250</p>
-                </div>
-               
+                <a href="/events/{{event.id}}" class="text-blue-500 hover:text-blue-600">Details</a>
             </div>
+            {% endfor %}
         </div>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const invitedUsersContainer = document.getElementById('invitedUsersContainer');
             const userSearchInput = document.getElementById('userSearchInput');
             const addUserBtn = document.getElementById('addUserBtn');
-            
+
             // Sample user data (in a real app, this would come from a database)
             const sampleUsers = [
                 { id: 1, name: "You", email: "you@example.com", avatar: "https://via.placeholder.com/40", isYou: true },
@@ -124,14 +132,14 @@
                 { id: 3, name: "Maria Garcia", email: "maria@example.com", avatar: "https://i.pravatar.cc/40?img=2" },
                 { id: 4, name: "James Smith", email: "james@example.com", avatar: "https://i.pravatar.cc/40?img=3" }
             ];
-            
+
             // Add sample users (in a real app, you'd fetch these from your backend)
             sampleUsers.forEach(user => {
                 addUserCard(user);
             });
-            
+
             // Add user button click handler
-            addUserBtn.addEventListener('click', function() {
+            addUserBtn.addEventListener('click', function () {
                 const searchTerm = userSearchInput.value.trim();
                 if (searchTerm) {
                     // In a real app, you would search your user database here
@@ -142,17 +150,17 @@
                         email: `${searchTerm.toLowerCase()}@example.com`,
                         avatar: `https://i.pravatar.cc/40?u=${searchTerm}`
                     };
-                    
+
                     addUserCard(newUser);
                     userSearchInput.value = '';
-                    
+
                     // Show success feedback
                     showToast(`${newUser.name} added successfully!`, 'success');
                 } else {
                     showToast('Please enter an email or username', 'error');
                 }
             });
-            
+
             // Function to add a user card
             function addUserCard(user) {
                 const userCard = document.createElement('div');
@@ -165,13 +173,13 @@
                     </div>
                     ${user.isYou ? '' : '<button class="remove-user text-gray-400 hover:text-red-500 transition"><i class="fas fa-times"></i></button>'}
                 `;
-                
+
                 invitedUsersContainer.appendChild(userCard);
-                
+
                 // Add remove button functionality
                 if (!user.isYou) {
                     const removeBtn = userCard.querySelector('.remove-user');
-                    removeBtn.addEventListener('click', function() {
+                    removeBtn.addEventListener('click', function () {
                         userCard.classList.add('opacity-0', 'scale-95');
                         setTimeout(() => {
                             userCard.remove();
@@ -180,7 +188,7 @@
                     });
                 }
             }
-            
+
             // Function to show toast notifications
             function showToast(message, type) {
                 const toast = document.createElement('div');
@@ -189,16 +197,16 @@
                     error: 'bg-red-500',
                     info: 'bg-blue-500'
                 };
-                
+
                 toast.className = `fixed bottom-4 right-4 text-white px-4 py-2 rounded-md shadow-lg ${colors[type]} transition transform translate-y-4 opacity-0`;
                 toast.textContent = message;
                 document.body.appendChild(toast);
-                
+
                 setTimeout(() => {
                     toast.classList.remove('translate-y-4', 'opacity-0');
                     toast.classList.add('translate-y-0', 'opacity-100');
                 }, 10);
-                
+
                 setTimeout(() => {
                     toast.classList.remove('translate-y-0', 'opacity-100');
                     toast.classList.add('translate-y-4', 'opacity-0');
@@ -207,7 +215,7 @@
             }
             // Create Event button click handler
             const createEventButton = document.querySelector('#ce');
-            createEventButton.addEventListener('click', function() {
+            createEventButton.addEventListener('click', function () {
                 const eventName = document.querySelector('input[placeholder="Enter event name"]').value.trim();
                 const totalPrice = document.querySelector('input[placeholder="0.00"]').value.trim();
                 const eventDate = document.querySelector('input[type="date"]').value.trim();
@@ -234,19 +242,19 @@
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to create event');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    showToast('Event created successfully!', 'success');
-                    console.log('Event created:', data);
-                })
-                .catch(error => {
-                    showToast(error.message, 'error');
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to create event');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        showToast('Event created successfully!', 'success');
+                        console.log('Event created:', data);
+                    })
+                    .catch(error => {
+                        showToast(error.message, 'error');
+                    });
             });
             // Simulate budget progress animation
             setTimeout(() => {
@@ -255,66 +263,66 @@
             }, 500);
         });
     </script>
-   <script>
-    // Dropdown menus
-    document.getElementById('notifBtn').addEventListener('click', function () {
-        document.getElementById('notifDropdown').classList.toggle('hidden');
-        document.getElementById('userDropdown').classList.add('hidden');
-    });
-
-    document.getElementById('userMenuBtn').addEventListener('click', function () {
-        document.getElementById('userDropdown').classList.toggle('hidden');
-        document.getElementById('notifDropdown').classList.add('hidden');
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function (event) {
-        if (!event.target.closest('#notifBtn')) {
-            document.getElementById('notifDropdown').classList.add('hidden');
-        }
-        if (!event.target.closest('#userMenuBtn')) {
+    <script>
+        // Dropdown menus
+        document.getElementById('notifBtn').addEventListener('click', function () {
+            document.getElementById('notifDropdown').classList.toggle('hidden');
             document.getElementById('userDropdown').classList.add('hidden');
-        }
-    });
+        });
 
-    // Animate budget numbers
-    function animateValue(id, start, end, duration) {
-        let startTimestamp = null;
-        const element = document.getElementById(id);
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const value = Math.floor(progress * (end - start) + start);
-            element.innerHTML = value.toLocaleString();
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
+        document.getElementById('userMenuBtn').addEventListener('click', function () {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+            document.getElementById('notifDropdown').classList.add('hidden');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('#notifBtn')) {
+                document.getElementById('notifDropdown').classList.add('hidden');
             }
-        };
-        window.requestAnimationFrame(step);
-    }
+            if (!event.target.closest('#userMenuBtn')) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
 
-    // Start animations when page loads
-    document.addEventListener('DOMContentLoaded', function () {
-        animateValue("marketingBudget", 0, 45000, 1000);
-        animateValue("operationsBudget", 0, 32000, 1000);
-        animateValue("rdBudget", 0, 28000, 1000);
+        // Animate budget numbers
+        function animateValue(id, start, end, duration) {
+            let startTimestamp = null;
+            const element = document.getElementById(id);
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.innerHTML = value.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
 
-        // Load trans   s dynamically
-        const transactions = [
-            { event: "Jazz Festival", amount: "$45.00", date: "Oct 12, 2023", status: "Completed", action: "View" },
-            { event: "Charity Gala", amount: "$75.00", date: "Oct 10, 2023", status: "Pending", action: "View" },
-            { event: "Yoga in Park", amount: "$15.00", date: "Oct 8, 2023", status: "Completed", action: "View" },
-            { event: "Tech Conference", amount: "$120.00", date: "Oct 5, 2023", status: "Completed", action: "View" }
-        ];
+        // Start animations when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            animateValue("marketingBudget", 0, 45000, 1000);
+            animateValue("operationsBudget", 0, 32000, 1000);
+            animateValue("rdBudget", 0, 28000, 1000);
 
-        const tableBody = document.getElementById('transactionsTable');
-        transactions.forEach(transaction => {
-            const row = document.createElement('tr');
-            row.className = 'hover:bg-gray-50 transition';
+            // Load trans   s dynamically
+            const transactions = [
+                { event: "Jazz Festival", amount: "$45.00", date: "Oct 12, 2023", status: "Completed", action: "View" },
+                { event: "Charity Gala", amount: "$75.00", date: "Oct 10, 2023", status: "Pending", action: "View" },
+                { event: "Yoga in Park", amount: "$15.00", date: "Oct 8, 2023", status: "Completed", action: "View" },
+                { event: "Tech Conference", amount: "$120.00", date: "Oct 5, 2023", status: "Completed", action: "View" }
+            ];
 
-            const statusClass = transaction.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800';
+            const tableBody = document.getElementById('transactionsTable');
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition';
 
-            row.innerHTML = `
+                const statusClass = transaction.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800';
+
+                row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10 bg-orange-100 rounded-full flex items-center justify-center">
@@ -341,11 +349,10 @@
                 </td>
             `;
 
-            tableBody.appendChild(row);
+                tableBody.appendChild(row);
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
-
-

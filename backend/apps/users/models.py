@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
+from backend.apps.events.models import Event
 
 
 class User(AbstractUser):
@@ -29,6 +30,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    def get_self_event(self, event_id):
+        event = Event.objects.get(id=event_id)
+        total_expenses = sum(event.expenses.values_list('amount', flat=True))
+        user_expenses = sum(event.expenses.filter(user=self).values_list('amount', flat=True))
+        self.share = (user_expenses / total_expenses) * 100 if total_expenses > 0 else 0
+        return self
+        
     
 
 class Group(models.Model):

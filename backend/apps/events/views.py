@@ -49,7 +49,8 @@ class events(LoginRequiredMixin, View):
 
 class create_event(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'create_event.html', {})
+        events = Event.objects.all()
+        return render(request, 'create_event.html', {"events": events})
 
     
 class detail_events(LoginRequiredMixin, View):
@@ -57,6 +58,7 @@ class detail_events(LoginRequiredMixin, View):
         event = Event.objects.get(id=id)
         tasks = event.tasks.all()
         participants = event.participants.all()
+        participants = [participant.get_self_event(id) for participant in participants]
         expenses = event.expenses.all()
         logged_in_user = request.user
         total_expenses = 0
