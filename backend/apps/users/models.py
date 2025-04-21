@@ -35,7 +35,7 @@ class User(AbstractUser):
         event = Event.objects.get(id=event_id)
         total_expenses = sum(event.expenses.values_list('amount', flat=True))
         user_expenses = sum(event.expenses.filter(user=self).values_list('amount', flat=True))
-        self.share = (user_expenses / total_expenses) * 100 if total_expenses > 0 else 0
+        self.share = round(float((user_expenses / total_expenses) * 100), 2) if total_expenses > 0 else 0
         return self
         
     
