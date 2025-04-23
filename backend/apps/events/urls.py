@@ -14,6 +14,7 @@ urlpatterns = [
     path('participants/', views.participants.as_view(), name='participants'),
     path('create/', views.create_event.as_view(), name='create_event'),
     path('<int:id>/', views.detail_events.as_view(), name='detail_events'),
+    path('get_expenses/<int:id>/', views.event_expenses.as_view(), name='expense_api')
 ]
 
 

@@ -73,3 +73,5 @@ class notification(LoginRequiredMixin, View):
             "user": logged_in_user,
             "notifications": notifications,
         })
+
+

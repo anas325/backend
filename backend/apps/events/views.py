@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import JsonResponse
 # Create your views here.
 # views.py
 from rest_framework import generics
@@ -93,3 +93,12 @@ class participants(LoginRequiredMixin, View):
                 message=f"{user.username} has joined the event {event.name}",
             )
         return redirect(f'/events/{id}/')
+    
+
+class event_expenses(View):
+    def get(self, request, id):
+        expenses = Event.objects.get(id=id).expenses
+        expenses_json = list(expenses.values())
+        return JsonResponse(expenses_json, safe=False)
+    
+
