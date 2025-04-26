@@ -25,6 +25,7 @@ urlpatterns = [
     path('events/',include('backend.apps.events.urls')),
     path('user/',include('backend.apps.users.urls')),
     path('',include('backend.apps.base.urls')),
+    path('chat/',include('backend.apps.chat.urls')),
     
 ]
 
