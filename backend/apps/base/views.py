@@ -82,7 +82,12 @@ class signup(View):
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
         profile_picture = request.FILES.get('profile_picture')
+        profile_picture = profile_picture if profile_picture is not None else 'profile_pics/default_profile.png'
         bio = request.POST.get('bio')
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+
+        print("pp",profile_picture)
 
         if User.objects.filter(username=username).exists():
             return render(request, 'signup.html', {'error': 'Username already exists'})
@@ -93,7 +98,9 @@ class signup(View):
             password=password,
             phone_number=phone_number,
             profile_picture=profile_picture,
-            bio=bio
+            bio=bio,
+            first_name = firstname,
+            last_name = lastname
         )
         user.save()
         return redirect('login')

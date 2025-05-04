@@ -6,7 +6,7 @@ from backend.apps.events.models import Event
 
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+    profile_picture = models.ImageField(upload_to="profile_pics/", blank=False, null=False, default='profile_pics/default_profile.png')
     bio = models.TextField(blank=True, null=True)
 
     # The default 'auth.User' model already has 'groups' and 'user_permissions' fields.
