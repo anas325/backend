@@ -173,8 +173,8 @@
                             </div>
                         </div>
                         <div class="flex flex-col items-center mt-4">
-                            {% if organizer.profile_picture %}
-                            <img src="{{organizer.profile_picture.url}}" alt="User Profile Picture"
+                            {% if event.organizer.profile_picture %}
+                            <img src="{{event.organizer.profile_picture.url}}" alt="User Profile Picture"
                                 class="w-12 h-12 rounded-full object-cover">
                             {% else %}
                             <div class="w-10 h-10 bg-gray-200 flex items-center justify-center text-gray-500">
@@ -182,7 +182,7 @@
                             </div>
                             {% endif %}
                             
-                            <p class="text-gray-700 mt-2 text-sm font-medium">{{organizer.username}}</p>
+                            <p class="text-gray-700 mt-2 text-sm font-medium">{{event.organizer.username}}</p>
                         </div>
                         
                         <div class="flex justify-between items-center mt-4">

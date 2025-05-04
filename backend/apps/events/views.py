@@ -41,14 +41,19 @@ class events(LoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.all()
         logged_in_user = request.user
-        organizer = User.objects.filter(id__in=events.values_list('organizer', flat=True))
         return render(request, 'events.html', {"events": events,
-                                            "user": logged_in_user,
-                                            "organizer": organizer[0]
+                                            "user": logged_in_user
+                                            })
+class my_events(LoginRequiredMixin, View):
+    def get(self, request):
+        events = Event.objects.filter(organizer = request.user)
+        logged_in_user = request.user
+        return render(request, 'my_events.html', {"events": events,
+                                            "user": logged_in_user
                                             })
 
 class create_event(LoginRequiredMixin, View):
-    def get(self, request):
+    def get(self, request): 
         events = Event.objects.all()
         return render(request, 'create_event.html', {"events": events})
 
