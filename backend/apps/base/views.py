@@ -1,7 +1,5 @@
-
-
 # Create your views here.
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from backend.apps.users.models import User
 from backend.apps.events.models import Event
@@ -73,5 +71,31 @@ class notification(LoginRequiredMixin, View):
             "user": logged_in_user,
             "notifications": notifications,
         })
+
+class signup(View):
+    def get(self, request):
+        return render(request, 'signup.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        password = request.POST.get('password')
+        profile_picture = request.FILES.get('profile_picture')
+        bio = request.POST.get('bio')
+
+        if User.objects.filter(username=username).exists():
+            return render(request, 'signup.html', {'error': 'Username already exists'})
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            phone_number=phone_number,
+            profile_picture=profile_picture,
+            bio=bio
+        )
+        user.save()
+        return redirect('login')
 
 
