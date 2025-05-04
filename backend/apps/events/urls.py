@@ -1,4 +1,4 @@
-from .views import EventViewSet, TaskViewSet, ExpanseViewSet
+from .views import EventViewSet, TaskViewSet, expenseViewSet
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from . import views
@@ -7,7 +7,7 @@ from . import views
 router = DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'tasks', TaskViewSet)
-router.register(r'expanses', ExpanseViewSet)
+router.register(r'expenses', expenseViewSet,)
 
 urlpatterns = [
     path('', views.events.as_view(), name='events'),

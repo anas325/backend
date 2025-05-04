@@ -7,3 +7,5 @@ class Message(models.Model):
     date = models.DateTimeField(default=datetime.now , blank = True)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='messages_sent')
     event = models.ForeignKey('events.Event', on_delete=models.CASCADE, related_name='related_messages')
+    def __str__(self):
+        return self.value +f'({self.user})'

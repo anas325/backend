@@ -241,7 +241,7 @@
                             <div class="flex items-center">
                                 <input type="text" name="message" placeholder="Écrivez un message..."
                                     class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                <button type="submit"
+                                <button type="submit" id="send_message"
                                     class="ml-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition">
                                     Envoyer
                                 </button>
@@ -254,7 +254,7 @@
             <!-- Formulaire Ajout Dépense (caché par défaut) -->
             <div id="expenseForm" class="hidden bg-white p-6 rounded-xl shadow-md mb-8 fade-in">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Nouvelle Dépense</h3>
-                <form action="/events/expanses/" method="post">
+                <form action="/events/expenses/" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="event" value="{{ event.id }}">
                     <input type="hidden" name="user" value="{{ user.id }}">
@@ -286,6 +286,7 @@
                                     <option value="transport">🚗 Transport</option>
                                     <option value="logement">🏠 Logement</option>
                                     <option value="loisirs">🎉 Loisirs</option>
+                                    <option value="autre">? Autre</option>
                                 </select>
                             </div>
                         </div>
@@ -489,50 +490,10 @@
             .catch(error => console.error('Erreur lors de la récupération des données :', error));
 
 
-        const ctx1 = document.getElementById('myChart2').getContext('2d');
-        fetch('/events/get_expenses/' + '{{event.id}}')
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.user);
-                const amounts = data.map(item => item.amount);
+       
+       
 
-                new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Dépenses par catégorie',
-                            data: amounts,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(255, 206, 86, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(255, 206, 86, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: 'Répartition des dépenses'
-                            }
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Erreur lors de la récupération des données :', error));
+               
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -541,7 +502,7 @@
         $(document).ready(function () {
             const chatMessagesContainer = $('.chat-messages');
             const messageInput = $('input[name="message"]');
-            const sendButton = $('button[type="submit"]');
+            const sendButton = $('#send_message');
 
             function fetchMessages() {
                 $.ajax({

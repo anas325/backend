@@ -11,7 +11,7 @@ class TaskSerializer(serializers.ModelSerializer):
                 model = Task
                 fields = '__all__'
 
-class ExpanseSerializer(serializers.ModelSerializer):
+class expenseSerializer(serializers.ModelSerializer):
             class Meta:
                 model = Expense
                 fields = '__all__'

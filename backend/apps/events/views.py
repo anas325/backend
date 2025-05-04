@@ -4,7 +4,7 @@ from django.http import JsonResponse
 # views.py
 from rest_framework import generics
 from .models import Event, Task, Expense
-from .serializers import EventSerializer, TaskSerializer, ExpanseSerializer
+from .serializers import EventSerializer, TaskSerializer, expenseSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from django.shortcuts import redirect
@@ -29,9 +29,9 @@ class TaskViewSet(viewsets.ModelViewSet):
         super().create(request, *args, **kwargs)
         return redirect('/events/')  
 
-class ExpanseViewSet(viewsets.ModelViewSet):
+class expenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
-    serializer_class = ExpanseSerializer
+    serializer_class = expenseSerializer
     def create(self, request, *args, **kwargs):
             super().create(request, *args, **kwargs)
             return redirect(f'/events/{request.data["event"]}/')  # Redirect after creating
