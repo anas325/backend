@@ -13,6 +13,7 @@ from django.views import View
 from backend.apps.users.models import User
 from backend.apps.events.models import Event
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ValidationError
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -44,13 +45,11 @@ class events(LoginRequiredMixin, View):
         return render(request, 'events.html', {"events": events,
                                             "user": logged_in_user
                                             })
+
 class my_events(LoginRequiredMixin, View):
     def get(self, request):
-        events = Event.objects.filter(organizer = request.user)
-        logged_in_user = request.user
-        return render(request, 'my_events.html', {"events": events,
-                                            "user": logged_in_user
-                                            })
+        events = Event.objects.filter(organizer=request.user)
+        return render(request, 'my_events.html', {"events": events, "user": request.user})
 
 class create_event(LoginRequiredMixin, View):
     def get(self, request): 
@@ -105,5 +104,26 @@ class event_expenses(View):
         expenses = Event.objects.get(id=id).expenses
         expenses_json = list(expenses.values())
         return JsonResponse(expenses_json, safe=False)
-    
+
+class edit_event(LoginRequiredMixin, View):
+    def get(self, request, id):
+        event = Event.objects.get(id=id)
+        return render(request, 'edit_event.html', {"event": event})
+
+    def post(self, request, id):
+        event = Event.objects.get(id=id)
+        event.name = request.POST.get('name')
+        event.description = request.POST.get('description')
+        event.date = request.POST.get('date') or event.date  # Use existing date if not provided
+        event.location = request.POST.get('location')
+        event.target_amount = request.POST.get('target_amount')
+
+        # Validate and save the event
+        try:
+            event.full_clean()  # Validate fields
+            event.save()
+            return redirect(f'/events/{id}/')
+        except ValidationError as e:
+            return render(request, 'edit_event.html', {"event": event, "errors": e.messages})
+
 
