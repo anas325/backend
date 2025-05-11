@@ -42,14 +42,18 @@ class events(LoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.all()
         logged_in_user = request.user
+        last_expenses = Expense.objects.order_by('-date')[:5]
         return render(request, 'events.html', {"events": events,
-                                            "user": logged_in_user
+                                            "user": logged_in_user,
+                                            "expenses" : last_expenses
                                             })
 
 class my_events(LoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.filter(organizer=request.user)
-        return render(request, 'my_events.html', {"events": events, "user": request.user})
+        last_expenses = Expense.objects.order_by('-date')[:5]
+        return render(request, 'my_events.html', {"events": events, "user": request.user,
+                                            "expenses" : last_expenses})
 
 class create_event(LoginRequiredMixin, View):
     def get(self, request): 
@@ -62,6 +66,7 @@ class detail_events(LoginRequiredMixin, View):
         event = Event.objects.get(id=id)
         tasks = event.tasks.all()
         participants = event.participants.all()
+        participants_count = len(participants) or 0
         participants = [participant.get_self_event(id) for participant in participants]
         expenses = event.expenses.all()
         logged_in_user = request.user
@@ -79,7 +84,8 @@ class detail_events(LoginRequiredMixin, View):
                                             "participants": participants,
                                             "expenses": expenses,
                                             "total_expenses": total_expenses,
-                                            "expense_proportion": int(expense_proportion)
+                                            "expense_proportion": int(expense_proportion),
+                                            "participants_count" : participants_count
                                             })
 
 
