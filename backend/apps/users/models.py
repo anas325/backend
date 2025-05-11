@@ -30,6 +30,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    def unread_notifs(self) : 
+        all_notifs = notification.objects.filter(user=self)
+        return all_notifs.filter(is_read=False)
     
     def get_self_event(self, event_id):
         event = Event.objects.get(id=event_id)
@@ -68,3 +71,4 @@ class notification(models.Model):
 
     def __str__(self):
         return f"Notification for {self.user.username} - {self.message}"
+    
