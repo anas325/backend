@@ -28,6 +28,7 @@
       </div>
   </header>
 
+<<<<<<< HEAD
   <!-- Sidebar -->
   <aside id="sidebar"
          class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-300 bg-gradient-to-b from-gray-100 to-white border-r shadow-md">
@@ -61,6 +62,53 @@
           {% else %}
             <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
               <i class="fas fa-user text-gray-500"></i>
+=======
+            <nav class="sidebar-nav">
+                <a href="/events" class="sidebar-link active">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="sidebar-link-text">All Events</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-comments"></i>
+                    <span class="sidebar-link-text">Group Chat</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-cog"></i>
+                    <span class="sidebar-link-text">Settings</span>
+                </a>
+                <a href="/create_event" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="sidebar-link-text">Create Event</span>
+                </a>
+                <a href="/events/mine" class="sidebar-link">
+                    <i class="fas fa-history"></i>
+                    <span class="sidebar-link-text">My Events</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-user">
+                <a href="/user/{{user.id}}" class="flex items-center px-3 py-2">
+                    {% if user.profile_picture %}
+                    <img src="{{user.profile_picture.url}}" alt="User" class="w-10 h-10 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-user text-gray-500"></i>
+                    </div>
+                    {% endif %}
+                    <div class="user-info ml-3 overflow-hidden">
+                        <p class="user-name font-medium text-sm truncate"
+                            style="opacity: 0; transition: opacity 0.3s ease; color: #2c3e50">{{user.first_name}}
+                            {{user.last_name}}</p>
+                        
+                </a>
+                <form method="POST" action="{% url 'logout' %}" class="mt-3">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-link w-full text-left">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="sidebar-link-text">Logout</span>
+                    </button>
+                </form>
+>>>>>>> 88793bf (Update sidebar link for My Events and enhance edit_event template styling)
             </div>
           {% endif %}
           <span class="ml-3 text-gray-800 truncate">{{user.first_name}} {{user.last_name}}</span>
