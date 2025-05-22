@@ -1,24 +1,35 @@
 <nav class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-50">
-    <div class="text-2xl font-bold text-black flex items-center">
+    <div class="text-2xl font-bold text-black flex items-center flex-1">
         <i class="fas fa-users mr-2 text-orange-500"></i> WeSplit
     </div>
-    <div class="hidden md:flex space-x-6">
+    <!-- Hamburger for mobile (always visible on mobile, z-50 for stacking) -->
+    <button id="mobileMenuBtn" class="md:hidden text-orange-500 focus:outline-none z-50 ml-2">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+    <!-- Main nav links -->
+    <div class="hidden md:flex space-x-6" id="mainNavLinks">
         <a href="/" class="text-orange-500 font-medium hover:text-orange-600 transition">Home</a>
         <a href="/events" class="text-gray-700 hover:text-orange-500 transition">Browse events</a>
-        <a href="/create_event" class="text-gray-700 hover:text-orange-500 transition">Event Creation</a>
-        <a href="#" class="text-gray-700 hover:text-orange-500 transition">Chat & Networking</a>
+        <a href="/events/create" class="text-gray-700 hover:text-orange-500 transition">Event Creation</a>
+        <a href="/events/mine" class="text-gray-700 hover:text-orange-500 transition">My events</a>
+    </div>
+    <!-- Mobile nav dropdown -->
+    <div class="md:hidden hidden absolute top-16 left-0 w-full bg-white shadow-lg z-40 flex flex-col space-y-2 px-4 py-2" id="mobileNavDropdown">
+        <a href="/" class="text-orange-500 font-medium hover:text-orange-600 transition">Home</a>
+        <a href="/events" class="text-gray-700 hover:text-orange-500 transition">Browse events</a>
+        <a href="/events/create" class="text-gray-700 hover:text-orange-500 transition">Event Creation</a>
+        <a href="/events/mine" class="text-gray-700 hover:text-orange-500 transition">My events</a>
     </div>
     <div class="flex space-x-4 items-center">
-        <button class="text-gray-700 hover:text-orange-500 transition transform hover:scale-110">
-            <i class="fas fa-search"></i>
-        </button>
         <div class="relative">
             <a href="{%url 'notification'%}" class="text-gray-700 hover:text-orange-500 transition transform hover:scale-110" id="notifBtn">
                 <i class="fas fa-bell"></i>
             </a>
             <span
                 class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {{ user.unread_notifs.count }} 1000</span>
+                {{ user.unread_notifs.count }}</span>
 
             <div class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50"
                 id="notifDropdown">
@@ -33,13 +44,11 @@
             <img src="{{user.profile_picture.url}}"
             class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transition"
             alt="User Avatar" id="userMenuBtn">
-                            {% else %}
-                            <div class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 transitiond">
-                                No Image Available
-                            </div>
-                            {% endif %}
-           
-
+            {% else %}
+            <div class="rounded-full h-10 w-10 cursor-pointer hover:ring-2 hover:ring-orange-500 flex items-center justify-center bg-gray-200 text-xs text-gray-500">
+                No Image
+            </div>
+            {% endif %}
             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
                 id="userDropdown">
                 <a href="/user/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
@@ -54,3 +63,15 @@
         </div>
     </div>
 </nav>
+<!-- Mobile menu JS -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNavDropdown = document.getElementById('mobileNavDropdown');
+    mobileMenuBtn && mobileMenuBtn.addEventListener('click', () => {
+        if (mobileNavDropdown.classList.contains('hidden')) {
+            mobileNavDropdown.classList.remove('hidden');
+        } else {
+            mobileNavDropdown.classList.add('hidden');
+        }
+    });
+</script>

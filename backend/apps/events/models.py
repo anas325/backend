@@ -15,7 +15,7 @@ class Event(models.Model):
     participants = models.ManyToManyField('users.User',
                                         related_name='events', blank=True)
     target_amount = models.IntegerField(blank=True, null=True)
-    target_date = models.DateField(blank=True, null=True)
+    #target_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     cover_image = models.ImageField(upload_to='event_images/',

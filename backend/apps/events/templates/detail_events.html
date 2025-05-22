@@ -54,7 +54,7 @@
 
                         <div class="text-gray-600 uppercase tracking-wider">
                             {% if event.cover_image %}
-                            <img src="{{event.cover_image.url}}" alt="User Profile Picture">
+                            <img src="{{event.cover_image.url}}" class="h-full w-auto object-cover" alt="User Profile Picture">
                             {% else %}
                             <div class="w-10 h-10 bg-gray-200 flex items-center justify-center text-gray-500">
                                 No Image Available
